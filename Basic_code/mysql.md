@@ -467,3 +467,132 @@ avg：计算平均数
        * 子查询可以作为条件，使用运算符进行运算 in 来进行判断
     3. 子查询的结果是多行多列的：
        * 子查询可以作为一张虚拟表，来进行参与查询;
+
+## 事务
+
+概念：包含多个步骤的业务操作被事务管理，那么这些操作要么同时成功，要么同时失败
+
+1. 操作：
+
+​	开启事务：start transaction
+
+​	回滚：rollback(出现问题时，使用rollback来进行回滚)
+
+​	提交：commit；
+
+​	**在没有出现任何问题时，使用commit来进行提交事务。**
+
+​	mysql数据库中事务默认自动提交：
+
+​		一条DML语句会自动提交一次事务
+
+​			事务提交的两种方式：
+
+​					自动提交：
+
+​							任意一条DML语句都是触发自动提交事务
+
+​					手动提交：（oracle默认为手动提交事务）
+
+​							需要手动开启事务（start transaction），并手动开始提交事务（commit）
+
+​	修改事务的默认提交方式：
+
+​		查看事务的默认提交方式：select @@auto commit；-- 1代表自动提交，0代表手动提交
+
+​		修改默认提交方式： set @@ auto commit = 0;  
+
+2. 事务的四大特征：
+
+* 事务是原子性的：不可分割的最小操作单位，要么同时成功，要么同时失败。
+* 持久性：当事务一旦提交或者回滚，那么库中的表会进行持久性更新。
+* 隔离性：多个事务之间相互独立。
+* 一致性：事务操作前后，数据总量不变。
+
+3. 事务的隔离级别
+
+   概念：多个事务之间隔离的，相互独立的，但是如果多个事务操作同一批数据，则会引发一些问题，设置不同的隔离级别可以解决这些问题
+
+   * 脏读：一个事务，读取到林那个一个事务中没有提交的数据
+   * 不可重复读（虚读）：在同一个事务中两次读取到的数据不一样
+   * 幻读：一个事务操作（dml）数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到自己的修改
+
+   1. read uncommitted ：读未提交
+      * 产生的问题：脏读，不可重复度，幻读
+   2. read committed：读已提交(Oracle默认)
+      * 产生的问题：不可重复度，幻读
+   3. repeatable read：可重复读(MySQL默认)
+      * 产生的问题：幻读
+   4. seriallzable：串行化
+      * 可以解决大多数问题
+
+   **注意：隔离级别从小到大安全性越来越高，但是效率越来越低。**
+
+   ​	数据库查看隔离级别：
+
+   ​		select @@tx_isolation;
+
+   ​	数据库设置隔离级别：
+
+   ​		set globe transaction isolation level 级别字符串（read uncommitted）
+
+## DCL：
+
+DDL：增删改查数据库
+
+DML：操作增删改表中的数据
+
+DQL：查询表中的数据
+
+DCL：管理用户（授权）
+
+1. 管理用户
+
+   * 添加用户
+     * create user '用户名'@'主机名' identified by '密码';
+   * 删除用户
+     * drop user '用户名'@'主机名'
+   * 修改用户密码
+     * update user set password = password('新密码') where user = '用户名';
+     * set password for '用户名'@'主机名' = password('新密码');
+   * 查询用户
+     * use mysql;
+     * select * from user;
+     * 通配符：%表示可以在任意主机登录数据库
+   * 忘记密码：
+     * net stop mysql 停止服务（需要管理员权限）
+     * 使用无验证方式启动mysql服务
+       * mysqld --skip-grant-tables
+       * 直接输入mysql
+       * use mysql;
+       * update user set password = password('new passwrod') where user = 'username';
+       * 关闭cmd窗口
+       * 手动结束mysqld.exe进程
+       * 启动mysql服务(net start mysql)
+       * 使用新密码登录
+
+2. 授权
+
+   * 查询权限：
+
+     * show grants for '用户名'@'主机名';
+
+   * 授予权限
+
+     * grant 权限列表 on 数据库.表名 to  '用户名'@'主机名';
+
+     * grant select,delete,update on test.stu to "zhangsan"@"%"  （设置多个权限）
+
+       ```mysql
+       grant all on *.* to "zhangsan"@'%'; # 设置全部权限
+       ```
+
+   * 撤销权限
+
+     * revoke  权限列表 on 数据库.表名 from  '用户名'@'主机名';
+
+       ```mysql
+       revoke select on test.stu to "zhangsan"@"%"   # 取消查询权限
+       ```
+
+       
