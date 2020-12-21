@@ -162,9 +162,10 @@ public class JDBCUtil {
             System.out.println(path);
             //2.加载文件
             pro.load(new FileReader(path));
-            String url = pro.getProperty("url");
-            String user = pro.getProperty("user");
-            String password = pro.getProperty("password");
+            url = pro.getProperty("url");
+            user = pro.getProperty("user");
+            password = pro.getProperty("password");
+            driver = pro.getProperty("driver");
             Class.forName(driver);
         } catch (IOException e) {
             e.printStackTrace();

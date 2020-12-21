@@ -10,5 +10,7 @@
   * 标准接口：DataSource  javax.sql包下的
     * 方法：
       * 获取连接：getConnection()
+      * 归还连接：如果连接对象Connection是从连接池中获取的，那么调用Connection.close()方法，则不会再关闭连接了，而是归还连接
   * 一般情况下我们不需要去实现它，由数据库厂商来实现
     * C3P0：数据库连接池技术
+    * Druid：数据库连接池实现技术，由阿里巴巴提供
