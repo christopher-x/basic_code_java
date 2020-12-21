@@ -33,7 +33,7 @@ public class MethodMoney {
             //5.执行sql
             preparedStatement.executeUpdate();
             // 手动制造异常
-            int i = 3/0;
+//            int i = 3/0;
             preparedStatement1.executeUpdate();
 
             // 提交事务
