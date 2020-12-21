@@ -23,15 +23,19 @@ public class JDBCUtil {
             //1.创建Properties集合类
             Properties pro = new Properties();
             //获取src路径下的文件的方式--->ClassLoader类加载器
+//            System.out.println("我到这里了");
             ClassLoader classLoader = JDBCUtil.class.getClassLoader();
+//            System.out.println("来了吗？");
             URL resource = classLoader.getResource("jdbc.properties");
+//            System.out.println("来了来了");
             String path = resource.getPath();
             System.out.println(path);
             //2.加载文件
             pro.load(new FileReader(path));
-            String url = pro.getProperty("url");
-            String user = pro.getProperty("user");
-            String password = pro.getProperty("password");
+            url = pro.getProperty("url");
+            user = pro.getProperty("user");
+            password = pro.getProperty("password");
+            driver = pro.getProperty("driver");
             Class.forName(driver);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,10 +52,7 @@ public class JDBCUtil {
         return DriverManager.getConnection(url,user,password);
     }
 
-    /*
-        释放资源
-        @param stmt;
-     */
+  //释放资源
     public static void close(Statement stmt,Connection conn){
         if(stmt != null){
             try {
