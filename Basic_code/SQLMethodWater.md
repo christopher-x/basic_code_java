@@ -154,13 +154,28 @@
 
 1. 导入jar包
 2. 创建jdbctemplate对象，依赖于数据源DataSource
+   
    1. JDBCTemplate template = new JDBCTemplate(ds);
 3. 调用JDBCTemplate 的方法来完成CRUD的操作
    1. update()：执行DML语句，增删改
+
    2. queryForMap()：查询结果将结果集封装为Map集合
-   3. queryFprList()：查询结果将结果集封装为list集合
+
+      注意：此方法的查询结果的长度只能是1
+
+   3. queryForList()：查询结果将结果集封装为list集合
+
+      注意：将每一条记录封装为map集合，再将map集合装载到list集合中
+
    4. query()：查询结果，将结果封装为JavaBean对象
+
+      1. query的参数：RowMaper
+         1. 一般在使用时BeanPropertyRowMapper实现类，可以完成数据到javaBean的自动封装
+         2. new BeanPropertyRowMapper<类型>(类型.class)
+
    5. queryForObject：查询结果，将结果封装为对象
+
+      * 一般用于聚合函数的查询
 
 ```java
 package jdbc.day02.jdbctemplate;
