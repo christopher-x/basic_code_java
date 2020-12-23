@@ -31,28 +31,119 @@
 
     * Druid：数据库连接池实现技术，由阿里巴巴提供
 
-      * 导入jar包
+      * 使用步骤：
 
-      * 定义配置文件
+        1. 导入jar包
 
-        ```XML
-        driverClassName=com.mysql.cj.jdbc.Driver
-        url=jdbc:mysql://localhost:3306/test
-        username=root
-        password=admin
-        initialSize=5
-        maxActive=10
-        maxWait=3000;
+        2. 定义配置文件
+
+           ```XML
+           driverClassName=com.mysql.cj.jdbc.Driver
+           url=jdbc:mysql:///test?serverTimezone=UTC
+           username=root
+           password=admin
+           # 初始化连接数
+           initialSize=5
+           # 最大连接数
+           maxActive=10
+           # 超时时间
+           maxWait=3000
+           ```
+
+        3. 是properties
+
+        4. 可以叫任意名称，可以放在任意目录下
+
+        5. 获取数据库连接池对象：
+
+           * 通过一个工厂类来获取：druidDataSourceFactory
+
+        6. 获取连接：getConnection
+
+           ```java
+           package jdbc.day01.druid;
+           
+           import com.alibaba.druid.pool.DruidDataSourceFactory;
+           import com.mchange.v2.c3p0.ComboPooledDataSource;
+           
+           import javax.sql.DataSource;
+           import java.io.IOException;
+           import java.io.InputStream;
+           import java.sql.Connection;
+           import java.util.Properties;
+           
+           /*
+           druid 演示
+            */
+           public class DruidMethodTest01 {
+               public static void main(String[] args) throws Exception {
+                   //加载配置文件
+                   Properties pro = new Properties();
+                   //这个地方是个神坑！。class后面不要添加getclassreload
+                   InputStream rs = DruidMethodTest01.class.getResourceAsStream("/druid.properties");
+                   pro.load(rs);
+                   //通过工厂类来获取数据库连接对象
+                   DataSource ds = DruidDataSourceFactory.createDataSource(pro);
+                   Connection conn = ds.getConnection();
+                   System.out.println(conn);
+               }
+           }
+           
+           ```
+
+           
+
+      * 定义工具类：
+
+        1. 定义一个类JDBCUtils
+        2. 提供静态代码块加载配置文件，初始化连接池对象
+        3. 提供方法
+           1. 获取连接方法：通过数据库连接池获取连接
+           2. 释放资源
+           3. 获取连接池的方法
+
+        ```java
+        package jdbc.day01.druid.util;
+        
+        import javax.sql.DataSource;
+        import java.sql.Connection;
+        import java.sql.PreparedStatement;
+        import java.sql.SQLException;
+        
+        /*
+            使用新的工具类
+         */
+        public class DruidMethod01 {
+            public static void main(String[] args) {
+                /*
+                完成添加操作，给Account表添加一条新记录
+                 */
+                Connection conn =null;
+                PreparedStatement ps=null;
+                DataSource ds = JDBCUtils.getDataSource();
+                try {
+                    //1.获取连接
+                    conn = ds.getConnection();
+                    //2.定义sql
+                    String sql="insert into account values(null,?,?)";
+                    System.out.println(conn);
+                    //3.获取pst对象
+                    ps = conn.prepareStatement(sql);
+                    //给? 赋值
+                    ps.setString(1,"张三");
+                    ps.setDouble(2,3000);
+                    //执行sql
+                    int count = ps.executeUpdate();
+                    System.out.println(count);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }finally {
+                    //释放资源
+                    JDBCUtils.close(ps,conn);
+        
+                }
+            }
+        }
         ```
 
-      * 是properties
-
-      * 可以叫任意名称，可以放在任意目录下
-
-      * 获取数据库连接池对象：
-
-        * 通过一个工厂类来获取：druidDataSourceFactory
-
-      * 获取连接：getConnection
-
-      
+        
