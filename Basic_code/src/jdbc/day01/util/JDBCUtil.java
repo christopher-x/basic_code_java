@@ -14,6 +14,7 @@ public class JDBCUtil {
     private static String user;
     private static String password;
     private static String driver;
+
     /*
         文件的读取，只需要读取一次即可拿到这些值，使用静态代码块
      */
@@ -43,25 +44,26 @@ public class JDBCUtil {
             e.printStackTrace();
         }
     }
+
     /*
         获取连接
         @return 连接对象
      */
     public static Connection getConnection() throws SQLException {
         //
-        return DriverManager.getConnection(url,user,password);
+        return DriverManager.getConnection(url, user, password);
     }
 
-  //释放资源
-    public static void close(Statement stmt,Connection conn){
-        if(stmt != null){
+    //释放资源
+    public static void close(Statement stmt, Connection conn) {
+        if (stmt != null) {
             try {
                 stmt.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
-        if (conn !=null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -69,22 +71,23 @@ public class JDBCUtil {
             }
         }
     }
-    public static void close(ResultSet rs,Statement stmt, Connection conn){
-        if (rs != null){
+
+    public static void close(ResultSet rs, Statement stmt, Connection conn) {
+        if (rs != null) {
             try {
                 rs.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
-        if(stmt != null){
+        if (stmt != null) {
             try {
                 stmt.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
-        if (conn !=null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException throwables) {
