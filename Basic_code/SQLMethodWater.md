@@ -146,4 +146,39 @@
         }
         ```
 
-        
+## Spring JDBC
+
+ Spring框架对JDBC的简单封装，提供了一个JDBCTemplate()对象简化了JDBC的开发
+
+使用步骤：
+
+1. 导入jar包
+2. 创建jdbctemplate对象，依赖于数据源DataSource
+   1. JDBCTemplate template = new JDBCTemplate(ds);
+3. 调用JDBCTemplate 的方法来完成CRUD的操作
+   1. update()：执行DML语句，增删改
+   2. queryForMap()：查询结果将结果集封装为Map集合
+   3. queryFprList()：查询结果将结果集封装为list集合
+   4. query()：查询结果，将结果封装为JavaBean对象
+   5. queryForObject：查询结果，将结果封装为对象
+
+```java
+package jdbc.day02.jdbctemplate;
+
+import jdbc.day01.druid.util.JDBCUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class JdbcTemplateMethod01 {
+    public static void main(String[] args) {
+        //导入jar包
+        //创建对象
+        JdbcTemplate jtl = new JdbcTemplate(JDBCUtils.getDataSource());
+        //创建sql语句
+        String sql="update account set balance = 5000 where id =?";
+        //调用方法
+        int update = jtl.update(sql, 5);
+        System.out.println(update);
+    }
+}
+```
+
