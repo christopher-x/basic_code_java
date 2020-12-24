@@ -190,9 +190,18 @@ HTML
                 * checkbox：复选框
                   * 一般会给每一个单选框提供value属性，指定其被选中后提交的值
                   * check用于指定默认值
-                * file：图片
+                * file：文件选择框
+                * hidden：隐藏域，用于提交一些信息
+                * 按钮：
+                  * submit：提交按钮
+                  * button：普通按钮
+                  * image：用图片来代替按钮
+                    * src:指定图片的路径
                 * label：指定输入项的文字描述信息
                   * 注意：
                     * label的for属性一般会和input的id属性值对应，如果对应了，点击label区域，会让input输入框获取焦点
-              * select：
+              * select：下拉列表框
+                * 子元素：option，指定列表项
               * texxtare：文本域
+                * cols：指定每一行字符数量
+                * rows：默认多少行
