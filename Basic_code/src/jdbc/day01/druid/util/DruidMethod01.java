@@ -15,7 +15,7 @@ public class DruidMethod01 {
          */
         Connection conn =null;
         PreparedStatement ps=null;
-        DataSource ds = JDBCUtils.getDataSource();
+        DataSource ds = jdbc.day01.druid.util.JDBCUtils.getDataSource();
         try {
             //1.获取连接
             conn = ds.getConnection();
@@ -25,7 +25,7 @@ public class DruidMethod01 {
             //3.获取pst对象
             ps = conn.prepareStatement(sql);
             //给? 赋值
-            ps.setString(1,"张三");
+            ps.setString(1,"张三111");
             ps.setDouble(2,3000);
             //执行sql
             int count = ps.executeUpdate();
@@ -35,7 +35,6 @@ public class DruidMethod01 {
         }finally {
             //释放资源
             JDBCUtils.close(ps,conn);
-
         }
     }
 }
