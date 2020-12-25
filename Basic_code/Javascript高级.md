@@ -116,7 +116,105 @@
 
 ### 事件简单学习
 
+概念:Doucument Object Model 文档记录模型
+
+​	将标记语言文档的各个组成部分,封装为对象,可以使用这些对象,对标记语言进行CRUD的动态操作
+
 * 功能:某些组件被执行了某些操作后,触发某些代码的执行
 * 绑定事件:直接在html标签上,指定事件的属性,属性值就是js代码
   * 事件:onclick---单击事件
   * 通过js获取元素对象,指定事件属性,设置一个函数
+* 核心DOM:针对任何结构化文档的标准模型
+  * Document:文档对象
+  * Element:元素对象
+  * Attribute:属性对象
+  * Text:文本对象
+  * Comment:注释对象
+  * Node:节点对象,其他5个节点的父对象
+* XML DOM:针对XML文档的标准模型
+* HTML DOM:针对HTML文档的标准模型
+
+### 核心DOM模型:
+
+#### Document:文档对象
+
+1. 创建(获取):在html dom 模型中,可以使用window对象来获取
+   1. window.document
+   2. document
+2. 方法:
+   1. 获取Element对象:
+      1. getElementById() :根据id属性值来获取元素对象,id属性值一般情况下唯一
+      2. getElementsByTagName():根据元素名称获取元素对象们,返回值是一个数组
+      3. getElementsByClassName():根据class属性值获取元素对象们,返回值是一个数组
+      4. getElementsByName():根据name属性值获取对象们,返回值是一个数组
+   2. 创建其他的DOM对象:
+      1. createAttribute(name)	创建拥有指定名称的属性节点，并返回新的 Attr 对象
+      2. createComment()	创建注释节点。
+      3. createElement()	创建元素节点。
+      4. createTextNode()	创建文本节点。
+3. 属性:
+
+#### Element:元素对象
+
+1. 获取:通过document来获取和创建
+2. 方法:
+   1. removeAttribute():删除属性
+   2. setAttribute:设置属性
+
+#### Node:节点对象,其他5个节点的父对象
+
+* 特点:所有DOM对象都可以被认为是一个节点
+* 方法:
+  * CRUD DOM数
+  * appendChild()	向节点的子节点列表的结尾添加新的子节点。
+  * removeChild()	删除（并返回）当前节点的指定子节点。
+  * replaceChild()	用新节点替换一个子节点。
+* 属性:
+  * parentNode	返回节点的父节点。
+
+### HTML DOM
+
+1. 标签体的设置和获取:innerHTML
+2. 使用html元素对象的属性
+3. 控制样式
+
+## 事件监听机制
+
+概念:某些组件被执行了某些操作后,触发某些执行代码的执行
+
+1. 事件,某些操作,如:单击,双击,键盘按下,鼠标移动
+2. 事件源:组件 如:按钮 文本输入框...
+3. 监听器:代码.
+4. 注册监听:将事件,事件源,监听器,结合在一起. 当事件源上发生了某个事件则触发执行某个监听器代码
+
+### 常见的事件
+
+1. 点击事件:
+   1. onclick:单击事件
+   2. ondblclick:双击事件
+2. 焦点事件:
+   1. onblur:失去焦点
+      1. 一般用于表单验证
+   2. onfocus:元素获得焦点
+3. 加载事件
+   1. onload:一张页面或一幅图完成加载
+4. 鼠标事件
+   1. onmousedown 鼠标按钮被按下
+      1. 定义方法时:定义一个形参,接收event对象
+      2. event对象button属性可以获取鼠标按钮被点击了
+   2. onmouseup 鼠标按键被松开
+   3. onmousemove 鼠标被移动
+   4. onmouseout 鼠标从某个元素上移开
+   5. onmouseover 鼠标移到某个元素上
+5. 键盘事件
+   1. onkeydown 某个键盘被松开
+   2. onkeyup 某个按键被松开
+   3. onkeypress 某个键盘按键被按下并松开
+6. 选中和改变
+   1. onchange 域的内容被改变
+   2. onselect 文本被选中
+7. 表单事件
+   1. onsubmit 确认按钮被点击
+      1. 可以阻止表单的提交
+      2. 方法返回false则表单被阻止提交
+   2. onreset 重置按钮被点击
