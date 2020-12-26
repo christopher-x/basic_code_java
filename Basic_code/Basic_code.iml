@@ -98,5 +98,23 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/讲义+笔记+资料/JavaWeb/17.会员版(2.0)-就业课(2.0)-XML/day32_xml/02_代码/day32_xml/libs/jsoup-1.11.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/讲义+笔记+资料/JavaWeb/17.会员版(2.0)-就业课(2.0)-XML/day32_xml/02_代码/day32_xml/libs/JsoupXpath-0.3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
