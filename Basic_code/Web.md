@@ -170,7 +170,7 @@ web服务器软件：接收用户的请求，处理请求，做出响应。
 * IDEA与tomcat的相关配置
 
   * IDEA会为每一个tomcat部署的项目单独建立一份配置文件
-    * 查看控制台的log：Using CATALINA_BASE:   "C:\Users\fqy\.IntelliJIdea2018.1\system\tomcat\_itcast"
+    * 查看控制台的log：Using CATALINA_BASE:   
   2. 工作空间项目    和     tomcat部署的web项目
   	* tomcat真正访问的是“tomcat部署的web项目”，"tomcat部署的web项目"对应着"工作空间项目" 的web目录下的所有资源
   	* WEB-INF目录下的资源不能被浏览器直接访问。
